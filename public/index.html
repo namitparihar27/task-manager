@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TaskFlow — Personal Task Manager</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-icon">⚡</div>
+      <h1>TaskFlow</h1>
+    </div>
+    <div class="stats">
+      <div class="stat-pill active">
+        <span class="stat-count" id="statActive">0</span>
+        <span>active</span>
+      </div>
+      <div class="stat-pill done">
+        <span class="stat-count" id="statDone">0</span>
+        <span>done</span>
+      </div>
+      <div class="stat-pill overdue" style="display:none">
+        <span class="stat-count" id="statOverdue">0</span>
+        <span>overdue</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- Add Task -->
+  <div class="add-task-card">
+    <form id="addTaskForm">
+      <div class="form-row">
+        <div class="form-group" style="flex:2">
+          <label>Task title *</label>
+          <input type="text" id="newTitle" placeholder="What needs to be done?" required autocomplete="off" />
+        </div>
+        <div class="form-group">
+          <label>Due date</label>
+          <input type="date" id="newDue" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group" style="flex:2">
+          <label>Description</label>
+          <textarea id="newDesc" placeholder="Optional notes..."></textarea>
+        </div>
+        <div style="display:flex;align-items:flex-end;padding-bottom:0">
+          <button type="submit" class="btn btn-primary" style="height:64px;padding:0 28px;font-size:14px">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add Task
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls">
+    <div class="filter-tabs">
+      <button class="filter-tab active" data-filter="all">All</button>
+      <button class="filter-tab" data-filter="active">Active</button>
+      <button class="filter-tab" data-filter="completed">Completed</button>
+    </div>
+    <div class="search-wrap">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="searchInput" placeholder="Search tasks..." autocomplete="off" />
+    </div>
+  </div>
+
+  <!-- Task list -->
+  <div id="taskList">
+    <div class="empty-state">
+      <div class="empty-icon">📋</div>
+      <h3>No tasks yet</h3>
+      <p>Add a task above to get started.</p>
+    </div>
+  </div>
+
+</main>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal-overlay" id="deleteModal" style="display:none">
+  <div class="modal">
+    <h2>Delete task?</h2>
+    <p>
+      You're about to delete <strong id="deleteTaskTitle"></strong>.
+      This cannot be undone.
+    </p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="cancelDeleteBtn">Cancel</button>
+      <button class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<script src="/js/app.js"></script>
+</body>
+</html>
