@@ -62,5 +62,22 @@ app.patch('/api/tasks/:id', (req, res) => {
   res.json(task);
 });
 
+// DELETE /api/tasks/:id
+app.delete('/api/tasks/:id', (req, res) => {
+  const tasks = readTasks();
+  const idx = tasks.findIndex(t => t.id === req.params.id);
+  if (idx === -1) return res.status(404).json({ error: 'Task not found.' });
+  tasks.splice(idx, 1);
+  writeTasks(tasks);
+  res.json({ success: true });
+});
+
+// Fallback: serve index.html for any non-API route
+app.get('/{*path}', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
+});
+
+app.listen(PORT, () => {
+  console.log(`Task Manager running at http://localhost:${PORT}`);
 
 });
